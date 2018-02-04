@@ -6,6 +6,12 @@ from ip.headers import ICMP_HEADER, IP_HEADER, ICMP_HEADER_FORMAT, IP_HEADER_FOR
 class PacketParser:
 
     def parse(self, packet, packet_id):
+        """Extract IP and ICMP headers from package.
+
+        :param packet:
+        :param packet_id:
+        :return: IP and ICMP headers
+        """
         ip_header = None
 
         icmp_header = self._build_map(ICMP_HEADER, ICMP_HEADER_FORMAT, data=packet[20:28])
