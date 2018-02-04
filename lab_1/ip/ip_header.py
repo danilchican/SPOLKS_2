@@ -23,9 +23,6 @@ class IPHeader(IPv4Header):
 
         return struct.pack(self.format, *package_obj)
 
-    def __len__(self):
-        return struct.calcsize(self.format)
-
     def unpack(self, byte_obj):
         packet = PacketData(*struct.unpack(self.format, byte_obj))
 
