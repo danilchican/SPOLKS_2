@@ -1,12 +1,16 @@
 # tos = dscp
 # ecn - unused
 # options - unused
-import socket
+from collections import namedtuple
 
 PROTOCOL_VERSION = 4
 HEADER_LENGTH_IN_WORDS = 5
 AUTO_VALUE = 0
 NO_FRAGMENTATION = 2
+
+PacketData = namedtuple('PacketData',
+                        'version_ihl dscp total_length identification '
+                        'flags_fragment ttl protocol checksum src dest')
 
 
 class IPv4Header:
