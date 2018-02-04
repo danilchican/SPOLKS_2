@@ -1,7 +1,7 @@
 import socket
 
 from ip.ip_header import DEFAULT_TTL, IPHeader
-from ip.ipv4 import PROTOCOL_VERSION, HEADER_LENGTH_IN_WORDS, AUTO_VALUE, NO_FRAGMENTATION
+from ip.ipv4 import PROTOCOL_VERSION, HEADER_LENGTH_IN_WORDS, AUTO_VALUE
 
 DEFAULT_PACKAGE_ID = 22244
 
@@ -17,6 +17,7 @@ class PackageBuilder:
         src = socket.inet_aton(self.src)
         dest = socket.inet_aton(self.dest)
 
-        header = IPHeader(PROTOCOL_VERSION, src, dest, ttl, self.protocol, HEADER_LENGTH_IN_WORDS)
+        header = IPHeader(PROTOCOL_VERSION, src, dest, ttl, self.protocol, HEADER_LENGTH_IN_WORDS,
+                          AUTO_VALUE, DEFAULT_PACKAGE_ID)
 
         return header.pack() + self.payload  # return package
