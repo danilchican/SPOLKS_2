@@ -1,7 +1,7 @@
 import socket
 import threading
 
-from config.logger import get_logger
+from helper.logger import get_logger
 from ip.ipv4 import AUTO_VALUE
 from request.exceptions.unable_to_resolve_error import UnableToResolveError
 
