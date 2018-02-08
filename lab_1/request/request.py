@@ -1,13 +1,18 @@
 import socket
-import threading
 
-from helper.logger import get_logger
+import os
+import sys
+
+path = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(path[:-9])
+
+# from helper.logger import get_logger
 from ip.ipv4 import AUTO_VALUE
 from request.exceptions.unable_to_resolve_error import UnableToResolveError
 
-DEFAULT_PACKAGES_COUNT = 4
-DEFAULT_MAX_PAYLOAD_SIZE = 64
-DEFAULT_TIMEOUT = 5
+DEFAULT_PACKAGES_COUNT = 3
+DEFAULT_MAX_PAYLOAD_SIZE = 32
+DEFAULT_TIMEOUT = 1
 
 
 class Request:
@@ -15,7 +20,11 @@ class Request:
                  packets=DEFAULT_PACKAGES_COUNT,
                  timeout=DEFAULT_TIMEOUT,
                  max_payload_size=DEFAULT_MAX_PAYLOAD_SIZE):
-        self.package_id = threading.get_ident
+        print("{} {} {} {}", host_name, packets, timeout, max_payload_size)
+
+        # self.package_id = threading.current_thread().ident  # 1  TODO HARD
+        self.package_id = os.getpid() & 0xffff
+        print("Thread id: {}".format(self.package_id))
         self.host_name = host_name
         self.host_addr = self.resolve()
 
@@ -29,7 +38,7 @@ class Request:
     def resolve(self):
         try:
             host = socket.gethostbyname(self.host_name)
-            get_logger(__file__).info("Resolved host: " + host)
+            # get_logger(__file__).info("Resolved host: {}".format(host))
             return host
         except socket.error:
-            raise UnableToResolveError('Unable to resolve host: ' + self.host_name)
+            raise UnableToResolveError("Unable to resolve host: {}".format(self.host_name))
