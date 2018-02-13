@@ -13,6 +13,7 @@ from request.exceptions.unable_to_resolve_error import UnableToResolveError
 DEFAULT_PACKAGES_COUNT = 3
 DEFAULT_MAX_PAYLOAD_SIZE = 32
 DEFAULT_TIMEOUT = 1
+RETRIEVED_SHIFT = 0xFFFF
 
 
 class Request:
@@ -23,8 +24,8 @@ class Request:
         print("{} {} {} {}", host_name, packets, timeout, max_payload_size)
 
         # self.package_id = threading.current_thread().ident  # 1  TODO HARD
-        self.package_id = os.getpid() & 0xffff
-        print("Thread id: {}".format(self.package_id))
+        self.package_id = os.getpid() & RETRIEVED_SHIFT
+        print("Process id: {}".format(self.package_id))
         self.host_name = host_name
         self.host_addr = self.resolve()
 

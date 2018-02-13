@@ -25,19 +25,6 @@ def thread_exec(args):
         raise
 
 
-def main():
-    args = _parse_args(sys.argv[1:])
-    settings = [args.count, args.size, args.timeout]
-    options = [(host, *settings) for host in args.dest]
-
-    with Pool(len(args.dest)) as pool:
-        pool.map(thread_exec, options)
-
-
-if __name__ == '__main__':
-    main()
-
-
 def _parse_args(args):
     formatter = lambda prog: argparse.HelpFormatter(prog, max_help_position=46, width=100)
     parser = argparse.ArgumentParser(
@@ -60,3 +47,16 @@ def _parse_args(args):
     parsed_args = parser.parse_args(args)
 
     return parsed_args
+
+def main():
+    args = _parse_args(sys.argv[1:])
+    settings = [args.count, args.size, args.timeout]
+    options = [(host, *settings) for host in args.dest]
+
+    with Pool(len(args.dest)) as pool:
+        pool.map(thread_exec, options)
+
+
+if __name__ == '__main__':
+    main()
+
